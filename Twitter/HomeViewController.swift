@@ -31,6 +31,7 @@ class HomeViewController: UITableViewController {
             
             self.tableView.reloadData()
             self.myRefreshControl.endRefreshing()
+            //print(self.tweetArray)
         }, failure: { (Error) in
             print("Could not retrieve the tweets from the API")
             
@@ -108,8 +109,10 @@ class HomeViewController: UITableViewController {
         
         cell.tweetContentLabel.text = tweetArray[indexPath.row]["text"] as! String
         
-        
-        
+        cell.profileImageView.layer.masksToBounds = true
+        cell.profileImageView.layer.cornerRadius = cell.profileImageView.bounds.width / 2
+        let screen_name = user["screen_name"] as! String
+        cell.twitterHandleLabel.text = "@" + screen_name
         return cell
     }
 

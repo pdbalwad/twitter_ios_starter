@@ -10,6 +10,9 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    
+    @IBOutlet weak var loginButton: UIButton!
+    
     @IBAction func onLoginButtonClick(_ sender: Any) {
         print("Login button clicked")
         let loginUrl = "https://api.twitter.com/oauth/request_token"
@@ -36,7 +39,10 @@ class LoginViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        loginButton.layer.cornerRadius = loginButton.bounds.size.height / 2
+        //loginButton.clipsToBounds = true
+        loginButton.setTitle("Login to Twitter", for: .normal)
         // Do any additional setup after loading the view.
     }
     
