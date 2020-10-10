@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="-1171.0144927536232" y="-237.22826086956525"/>
         </scene>
-        <!--Home-->
+        <!--HomeViewController-->
         <scene sceneID="vWi-sy-q4d">
             <objects>
-                <tableViewController id="amK-IK-ve5" sceneMemberID="viewController">
+                <tableViewController title="HomeViewController" id="amK-IK-ve5" customClass="HomeViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="oyo-Cu-TeR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,6 +74,9 @@
                     <navigationItem key="navigationItem" title="Home" id="QA8-HC-U5F">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="N2m-ue-EMh">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="onLogoutButtonClick:" destination="amK-IK-ve5" id="3Az-2D-Pf1"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
