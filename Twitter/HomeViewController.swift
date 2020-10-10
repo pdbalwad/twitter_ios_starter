@@ -14,7 +14,7 @@ class HomeViewController: UITableViewController {
         print("Logout button clicked")
         TwitterAPICaller.client?.logout()
         self.dismiss(animated: true, completion: nil)
-        
+        UserDefaults.standard.set(false, forKey: "userLoggedIn")
         
         print("Logout successful")
         
