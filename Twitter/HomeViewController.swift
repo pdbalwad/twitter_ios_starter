@@ -113,6 +113,18 @@ class HomeViewController: UITableViewController {
         cell.profileImageView.layer.cornerRadius = cell.profileImageView.bounds.width / 2
         let screen_name = user["screen_name"] as! String
         cell.twitterHandleLabel.text = "@" + screen_name
+        let x: Int  = tweetArray[indexPath.row]["retweet_count"] as! Int
+        cell.retweetLabel.text = String(x)
+        let y: Int  = tweetArray[indexPath.row]["favorite_count"] as! Int
+        cell.favoriteLabel.text = String(y)
+        
+            
+        
+        
+        //cell.favoriteLabel.text = tweetArray[indexPath.row]["favorite_count"] as! String
+        //cell.replyLabel.text = tweetArray[indexPath.row]["statuses_count"] as! String
+        //retweet_count
+        
         return cell
     }
 

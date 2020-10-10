@@ -18,12 +18,17 @@ class TweetCell: UITableViewCell {
     
     @IBOutlet weak var twitterHandleLabel: UILabel!
     
- 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    
+    @IBOutlet weak var replyLabel: UILabel!
+    
+    
+    @IBOutlet weak var retweetLabel: UILabel!
+    
+    
+    @IBOutlet weak var favoriteLabel: UILabel!
+    
 
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
