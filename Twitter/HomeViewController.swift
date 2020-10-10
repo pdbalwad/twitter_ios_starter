@@ -13,10 +13,14 @@ class HomeViewController: UITableViewController {
     var tweetArray = [NSDictionary]()
     var numberOfTweets: Int!
     
-    func leadTweets(){
+    let myRefreshControl = UIRefreshControl()
+    
+    @objc func loadTweets(){
         
+        numberOfTweets = 30
         let homeTimeLineUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-        let myParams = ["count": 10]
+        
+        let myParams = ["count": numberOfTweets]
         TwitterAPICaller.client?.getDictionariesRequest(url: homeTimeLineUrl, parameters: myParams, success: { (tweets : [NSDictionary]) in
             
             self.tweetArray.removeAll()
@@ -26,12 +30,43 @@ class HomeViewController: UITableViewController {
             }
             
             self.tableView.reloadData()
+            self.myRefreshControl.endRefreshing()
         }, failure: { (Error) in
             print("Could not retrieve the tweets from the API")
             
         })
         
     }
+    
+    func loadMoreTweets(){
+        let homeTimeLineUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        numberOfTweets = numberOfTweets + 30
+        let myParams = ["count": numberOfTweets]
+        
+        TwitterAPICaller.client?.getDictionariesRequest(url: homeTimeLineUrl, parameters: myParams, success: { (tweets : [NSDictionary]) in
+            
+            self.tweetArray.removeAll()
+            for tweet in tweets{
+                
+                self.tweetArray.append(tweet)
+            }
+            
+            self.tableView.reloadData()
+           
+        }, failure: { (Error) in
+            print("Could not retrieve the tweets from the API")
+            
+        })
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
+        if indexPath.row + 1 == tweetArray.count{
+            loadMoreTweets()
+        }
+    }
+    
+    
     
     
     
@@ -46,8 +81,10 @@ class HomeViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        leadTweets()
+        loadTweets()
+        myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         
+        tableView.refreshControl = myRefreshControl
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
