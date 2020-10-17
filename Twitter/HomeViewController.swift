@@ -98,6 +98,7 @@ class HomeViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadTweets()
+        
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCell
@@ -122,8 +123,11 @@ class HomeViewController: UITableViewController {
         cell.retweetLabel.text = String(x)
         let y: Int  = tweetArray[indexPath.row]["favorite_count"] as! Int
         cell.favoriteLabel.text = String(y)
+        cell.favorite_count = y
         
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
             
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
         
         
         //cell.favoriteLabel.text = tweetArray[indexPath.row]["favorite_count"] as! String
@@ -144,6 +148,12 @@ class HomeViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return tweetArray.count
     }
+
+    
+    
+    
+   
+
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
