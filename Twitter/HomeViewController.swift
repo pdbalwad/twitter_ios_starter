@@ -21,7 +21,7 @@ class HomeViewController: UITableViewController {
         let homeTimeLineUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         
         let myParams = ["count": numberOfTweets]
-        TwitterAPICaller.client?.getDictionariesRequest(url: homeTimeLineUrl, parameters: myParams, success: { (tweets : [NSDictionary]) in
+        TwitterAPICaller.client?.getDictionariesRequest(url: homeTimeLineUrl, parameters: myParams as [String : Any], success: { (tweets : [NSDictionary]) in
             
             self.tweetArray.removeAll()
             for tweet in tweets{
@@ -39,12 +39,14 @@ class HomeViewController: UITableViewController {
         
     }
     
+    
+    
     func loadMoreTweets(){
         let homeTimeLineUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         numberOfTweets = numberOfTweets + 30
         let myParams = ["count": numberOfTweets]
         
-        TwitterAPICaller.client?.getDictionariesRequest(url: homeTimeLineUrl, parameters: myParams, success: { (tweets : [NSDictionary]) in
+        TwitterAPICaller.client?.getDictionariesRequest(url: homeTimeLineUrl, parameters: myParams as [String : Any], success: { (tweets : [NSDictionary]) in
             
             self.tweetArray.removeAll()
             for tweet in tweets{
@@ -82,7 +84,7 @@ class HomeViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTweets()
+        //loadTweets()
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         
         tableView.refreshControl = myRefreshControl
@@ -93,7 +95,10 @@ class HomeViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadTweets()
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCell
         let user = tweetArray[indexPath.row]["user"] as! NSDictionary
@@ -105,9 +110,9 @@ class HomeViewController: UITableViewController {
             cell.profileImageView.image = UIImage(data: imageData)
         }
         
-        cell.userNameLabel.text = user["name"] as! String
+        cell.userNameLabel.text = user["name"] as? String
         
-        cell.tweetContentLabel.text = tweetArray[indexPath.row]["text"] as! String
+        cell.tweetContentLabel.text = tweetArray[indexPath.row]["text"] as? String
         
         cell.profileImageView.layer.masksToBounds = true
         cell.profileImageView.layer.cornerRadius = cell.profileImageView.bounds.width / 2
